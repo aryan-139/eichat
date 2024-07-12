@@ -5,7 +5,7 @@
 
 ### optional 
 - [x] private messaging 
-- [x]message history, so that chat persists 
+- [x] message history, so that chat persists 
 
 ## Key Focus
 1. Behavioural Pattern: Use the Observer Pattern to notify clients of new messages or user activities.

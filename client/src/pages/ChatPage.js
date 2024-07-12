@@ -8,7 +8,7 @@ const ChatPage = () => {
   const { userName, room } = location.state || {};
   const socket=React.useContext(SocketContext);
   const [messagesReceived, setMessagesReceived] = useState([]);
-  console.log('Socket:', socket);
+  const [roomUsers, setRoomUsers] = useState([]);
 
  // Runs whenever a socket event is received from the server
  useEffect(() => {
@@ -27,6 +27,17 @@ const ChatPage = () => {
   // Remove event listener on component unmount
   return () => socket.off('receive_message');
 }, [socket]);
+
+//chatroom users total
+useEffect(() => {
+  socket.on('chatroom_users', (data) => {
+    console.log(data);
+    setRoomUsers(data);
+  });
+
+  return () => socket.off('chatroom_users');
+}, [socket]);
+
 
 
   return (

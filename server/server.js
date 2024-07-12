@@ -31,6 +31,8 @@ const io = socketio(server, {
 
 io.on('connection', (socket) => {
   console.log('A user connected ${socket.id}');
+
+  //join a room
   socket.on('join_room', (data) => {
     const { username, room } = data; // Data sent from client when join_room event emitted
     socket.join(room); // Join the user to a socket room

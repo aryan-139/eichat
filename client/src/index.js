@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import ChatPage from './components/ChatPage';
+import ChatPage from './pages/ChatPage';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -13,7 +13,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/chat" element={<ChatPage/>}/>
+        <Route path="/chat" element={<ChatPage />}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

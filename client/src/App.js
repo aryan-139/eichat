@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Select, MenuItem, FormControl, InputLabel, createTheme, ThemeProvider } from '@mui/material';
 import theme from './utils/Theme';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 
 const socket = io.connect('http://localhost:8001');
 
 const App = () => {
-  const [username, setUsername] = useState('');
+  const [userName, setUsername] = useState('');
   const [room, setRoom] = useState('');
-
+  const navigate = useNavigate();
   const handleJoin = () => {
-    console.log('Joining room:', room, 'with username:', username);
-    if (room !== '' && username !== '') {
-      socket.emit('join_room', { username, room });
+    console.log('Joining room:', room, 'with userName:', userName);
+    if (room !== '' && userName !== '') {
+      socket.emit('join_room', { userName, room });
     }
+    // Redirect to /chat
+    navigate('/chat', { state: { userName, room } });
   };
 
   const handleCreateRoom = () => {
@@ -27,9 +29,9 @@ const App = () => {
         <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="50vh" p={4} boxShadow={3} bgcolor="white" borderRadius={2}>
           <FormControl fullWidth margin="normal">
             <TextField
-              label="Username"
+              label="User Name"
               variant="outlined"
-              value={username}
+              value={userName}
               onChange={(e) => setUsername(e.target.value)}
               color="primary"
             />

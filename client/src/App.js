@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, Select, MenuItem, FormControl, InputLabel, createTheme, ThemeProvider } from '@mui/material';
+import { Box, TextField, Button, Select, MenuItem, FormControl, InputLabel, ThemeProvider } from '@mui/material';
 import theme from './utils/Theme';
 import { useNavigate } from 'react-router-dom';
-import io from 'socket.io-client';
-
-const socket = io.connect('http://localhost:8001');
+import { SocketContext } from './context/SocketContext';
 
 const App = () => {
+  const socket=React.useContext(SocketContext);
   const [userName, setUsername] = useState('');
   const [room, setRoom] = useState('');
   const navigate = useNavigate();

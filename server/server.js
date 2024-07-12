@@ -29,21 +29,44 @@ const io = socketio(server, {
   },
 });
 
-io.on('connection', (socket) => {
-  console.log('A user connected ${socket.id}');
+let chatRoom='';
+let allUsers=[];
 
-  //join a room
-  socket.on('join_room', (data) => {
-    const { username, room } = data; // Data sent from client when join_room event emitted
-    socket.join(room); // Join the user to a socket room
-    console.log(`${username} joined room: ${room} with socket id: ${socket.id}`);
-    // let __createdtime__ = Date.now(); // Current timestamp
-    // // Send message to all users currently in the room, apart from the user that just joined
-    // socket.to(room).emit('receive_message', {
-    //   message: `${username} has joined the chat room`,
-    //   username: CHAT_BOT,
-    //   __createdtime__,
-    });
+io.on('connection', (socket) => {
+  console.log('A user connected with socket_id:'+ socket.id);
+
+const CHAT_BOT='Chatbot';
+
+//join a room
+socket.on('join_room', (data) => {
+  const { userName, room } = data; // Data sent from client when join_room event emitted
+  socket.join(room); // Join the user to a socket room
+  console.log(`${userName} joined room: ${room} with socket id: ${socket.id}`);
+
+  let __createdtime__ = new Date().toLocaleTimeString();
+  
+  //send message to all users that someone joined
+  socket.to(room).emit('receive_message',{
+    user: CHAT_BOT,
+    message: `${userName} joined the room`,
+    createdtime: __createdtime__
+  })
+
+  //send message to the user that joined
+  socket.emit('receive_message',{
+    user: CHAT_BOT,
+    message: `Welcome to the room ${room}`,
+    createdtime: __createdtime__
+  })
+
+  //save the user to the room 
+  allUsers.push({userName, room, socketId: socket.id});
+  chatRoom=room;
+  chatRoomUsers = allUsers.filter((user) => user.room === room);
+  socket.to(room).emit('chatroom_users', chatRoomUsers);
+  socket.emit('chatroom_users', chatRoomUsers);
+ });
+
   
 });
 

@@ -11,22 +11,12 @@ const rootRouter = (app) => {
             res.status(200).json({
                 message: 'Welcome to EI Chat App!'
             });
-        })
+        }));
+    app.use('/signup', require('./register'));
+    app.use('/groups', require('./groups'));
+    app.use('/user', require('./user'));
+    app.use('/messages', require('./messages'));
 
-    ); 
-
-    //other routes 
-      //Unprotected Routes
-    //   app.use('/signup', require('./register'));
-    //   app.use('/auth', require('./auth'));
-  
-  
-  
-    //   //JWT Protescted routes below
-  
-    //   app.use('/user', verifyJWT); //verify the request only then move to the next route
-    //   app.use('/user', require('./user'));
-    //   app.use('/market', require('./market'));
 
     //404 handler
     app.use('*', (req, res) => {

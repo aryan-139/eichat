@@ -1,6 +1,6 @@
 // Create a theme with red and white styling
 import { red } from '@mui/material/colors';
-import { Box, TextField, Button, Select, MenuItem, FormControl, InputLabel, createTheme, ThemeProvider } from '@mui/material';
+import {  createTheme } from '@mui/material';
 
 
 const theme = createTheme({

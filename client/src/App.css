@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  color:white;
   background-image: linear-gradient(to right top, #10060c, #190b16, #1d1020, #1f142b, #1d1938, #1b2447, #143056, #003c64, #005174, #006580, #007a89, #2a8e8e);
     background-repeat:repeat;
     background-size:cover;

@@ -23,11 +23,16 @@ const SendMessage = ({ username, room }) => {
   const handleInputChange = (e) => {
     setInputText(e.target.value);
   };
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSendMessage(e);
+    }
+  };
 
   return (
     <Box sx={{ display: 'flex', padding: 2, bottom: 0, backgroundColor: 'white'  }}>
-      <TextField fullWidth variant="outlined" value={inputText} onChange={handleInputChange} placeholder="Type your message..." />
-      <Button variant="contained" color="primary" onClick={handleSendMessage}>Send</Button>
+      <TextField fullWidth variant="outlined" value={inputText} onKeyPress={handleKeyPress} onChange={handleInputChange} placeholder="Type your message..." />
+      <Button variant="contained" sx={{ backgroundColor: '#172B4D','&:hover': {  backgroundColor: '#0e1d33' }}} onClick={handleSendMessage}>Send</Button>
     </Box>
   );
 };

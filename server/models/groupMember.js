@@ -19,6 +19,6 @@ const groupMemberSchema=new Schema({
         default:false
     },
     left_datetime:{
-        type:Date
+        type:String
     }
 });

@@ -1,87 +1,130 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-import List from '@mui/material/List';
-import { Link } from 'react-router-dom';
-import { ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import SearchBox from './SearchBox';
-
-
+import { Box, Drawer, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography, TextField, Button } from '@mui/material';
+import ChatIcon from '@mui/icons-material/Chat';
 
 const drawerWidth = 350;
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    marginLeft: drawerWidth,
-  }),
-);
+const recentChats = [
+  {
+    username: 'John Doe',
+    message: 'Hello',
+    time: '12:00',
+    uid: '1234',
+  },
+  {
+    username: 'Jane Doe',
+    message: 'Hello',
+    time: '12:00',
+    uid: '1234',
+  },
+];
 
+const ChatDrawer = () => {
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const [currentChat, setCurrentChat] = React.useState(null);
 
-const ChatDrawer = ({roomUsers}) => {
-    const [searchTerm, setSearchTerm] = React.useState('');
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
-    const handleSearchChange = (term) => {
-      setSearchTerm(term);
-    };
-  
-    const filteredUsers = roomUsers.filter((user) =>
-      user.userName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  
+  const filteredChats = recentChats.filter((chat) =>
+    chat.username.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
       <Drawer
         sx={{
           width: drawerWidth,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: drawerWidth,
-            position: 'fixed',
-            boxSizing: 'border-box',
-            marginTop: '4.5%',
-            backgroundColor: '#e0544e',
+            backgroundColor: '#172B4D',
+            color: 'white',
           },
         }}
         variant="persistent"
         anchor="left"
         open
       >
-       
-        <List sx={{ color: 'white' }}>
-          {/**Dashboard ListItems */}
-          <ListItem disablePadding>
-            <ListItemButton component={Link} to="/" sx={{ '&:hover': { backgroundColor: '#702a27' } }}>
-              <ListItemIcon sx={{ color: 'white' }}>
-                <DashboardIcon sx={{ color: 'inherit' }} />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" sx={{ color: 'inherit' }} />
-            </ListItemButton>
-            
-          </ListItem>
-            <SearchBox onChange={handleSearchChange}/>
-            <Typography variant="h6" sx={{ color: 'white', marginLeft: '1rem' }}>Group Partcipants</Typography>
-            {filteredUsers.map((user) => (
-                <ListItem disablePadding>
-                <ListItemButton sx={{ '&:hover': { backgroundColor: '#702a27' }, display: 'flex', alignItems: 'center', gap: 2 }}>
-                  {/* <ListItemAvatar>
-                    <Avatar
-                      src={user.profilePictureUrl} // Assuming the user object has a profilePictureUrl property
-                      alt={user.userName}
-                      sx={{ width: 40, height: 40 }}
-                    />
-                  </ListItemAvatar> */}
-                  <ListItemText primary={user.userName} sx={{ color: 'white' }} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-        
+        <Box sx={{ padding: '1rem', display: 'flex', alignItems: 'center' }}>
+          <Box>
+            <Typography variant="h3" sx={{ color: 'white' }}>
+              Convo.ei
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'white' }}>
+              Select a chat to start messaging
+            </Typography>
+          </Box>
+          <ChatIcon sx={{ fontSize: 100, color: 'white', marginLeft: 'auto' }} />
+        </Box>
+        <List>
+          <Box sx={{ padding: '1rem' }}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              InputProps={{
+                style: { backgroundColor: 'white', borderRadius: '8px', marginTop: '0.5rem' },
+              }}
+            />
+          </Box>
+          {filteredChats.map((chat) => (
+            <ListItem
+              onClick={() => setCurrentChat(chat)}
+              key={chat.uid}
+              alignItems="flex-start"
+              sx={{
+                '&:hover': {
+                  backgroundColor: '#252D4A',
+                },
+              }}
+            >
+              <ListItemAvatar>
+                <Avatar alt={chat.username} src="/static/images/avatar/1.jpg" />
+              </ListItemAvatar>
+              <ListItemText
+                primary={
+                  <Typography variant="subtitle1" sx={{ color: 'white', fontWeight: 'bold' }}>
+                    {chat.username}
+                  </Typography>
+                }
+                secondary={
+                  <>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      sx={{ display: 'inline', color: 'white' }}
+                    >
+                      {chat.message}
+                    </Typography>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      sx={{ display: 'inline', float: 'right', color: 'white' }}
+                    >
+                      {chat.time}
+                    </Typography>
+                  </>
+                }
+              />
+            </ListItem>
+          ))}
         </List>
+        {/* Add buttons here */}
+        <Box sx={{ position: 'absolute', bottom: '1rem', width: '100%' }}>
+        <Button variant="contained" fullWidth sx={{ backgroundColor: '#172B4D', color: 'white', '&:hover': { backgroundColor: '#0e1d33' } }}>
+            Create Group
+          </Button>
+        <Button variant="contained" fullWidth sx={{ backgroundColor: '#172B4D', color: 'white', '&:hover': { backgroundColor: '#0e1d33' } }}>
+            Join Group
+          </Button>
+          <Button variant="contained" fullWidth sx={{backgroundColor: '#172B4D', color: 'white', '&:hover': { backgroundColor: '#0e1d33' } }}>
+            Active Users
+          </Button>
+        </Box>
       </Drawer>
     </Box>
   );

@@ -16,8 +16,8 @@ const ChatUI = ({ username, room }) => {
   }, [socket]);
 
   return (
-    <Box sx={{ padding: 2 }}>
-      <Box sx={{ maxHeight: '70vh', overflowY: 'auto', marginBottom: 2 }}>
+    <Box sx={{ padding: 7 }}>
+      <Box sx={{ maxHeight: '70vh', overflowY: 'auto', marginBottom: 2, minHeight: '65vh' }}>
         {messageArray.map((message, index) => {
           const isOwnMessage = message.user === username;
           return (

@@ -2,8 +2,7 @@ const mongoose=require('mongoose');
 const Schema=mongoose.Schema;
 const messageSchema=new Schema({
     messageId:{
-        type:String,
-        required:true
+        type:String
     },
     from_user:{
         type:String,
@@ -18,8 +17,8 @@ const messageSchema=new Schema({
         required:true
     },
     sent_datetime:{
-        type:Date,
-        default:Date.now
+        type:String,
+        required:true
     },
     contact_id:{
         type:String,

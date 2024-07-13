@@ -9,6 +9,7 @@ const groupRoute = require('./routes/groupRoutes');
 const messageRoute = require('./routes/messageRoutes');
 const connectDB = require('./config/connectDB');
 const mongoose = require('mongoose');
+const Message = require('./models/messages');
 
 
 const app = express();
@@ -80,6 +81,24 @@ io.on('connection', (socket) => {
   socket.on('send_message', (data) => {
     const { message, username, room, __createdtime__ } = data;
     console.log(data);
+    const newMessage={
+      messageId: Math.random().toString(36).substring(2, 9),
+      from_user: data.user,
+      message_text: message,
+      sent_datetime: data.createdtime,
+      group_id: room,
+      is_read: false,
+      to_user: room,
+      contact_id: data.user
+    };
+    console.log(newMessage);
+    const messageDB =new Message(newMessage);
+    try{
+      messageDB.save();
+    }
+    catch(err){
+      console.log("message not saved");
+    }
     // Push message to DB (this part should have the code to save message to DB)
     io.in(room).emit('receive_message', data); // Send to all users in room, including sender
   });

@@ -14,7 +14,7 @@ import Register from './pages/Register';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Navbar />
+    {/* <Navbar /> */}
     <SocketContext.Provider value={socket}>
     <BrowserRouter>
       <Routes>

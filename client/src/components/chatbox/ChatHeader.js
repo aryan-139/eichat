@@ -16,12 +16,18 @@ const ChatHeader = ({ username, roomName }) => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: '#172B4D' }}>
       <Toolbar>
-        <Typography variant="h6">
+        <Typography variant="h6" sx={{ flexGrow: 1, color: 'white' }}>
           {roomName}
         </Typography>
-        <Button color="inherit" onClick={leaveRoom}>Leave Room</Button>
+        <Button 
+          sx={{ color: 'white', borderColor: 'white', '&:hover': { backgroundColor: '#2A4365' } }} 
+          onClick={leaveRoom} 
+          variant="outlined"
+        >
+          Leave Room
+        </Button>
       </Toolbar>
     </AppBar>
   );

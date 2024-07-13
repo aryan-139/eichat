@@ -5,6 +5,8 @@ const errorHandler = require('./middlewares/errorHandler');
 const http = require('http');
 const socketio = require('socket.io');
 const userRoute = require('./routes/userRoutes');
+const groupRoute = require('./routes/groupRoutes');
+const messageRoute = require('./routes/messageRoutes');
 const connectDB = require('./config/connectDB');
 const mongoose = require('mongoose');
 
@@ -93,3 +95,5 @@ server.listen(PORT, () => {
 
 // Routes
 app.use('/user', userRoute);
+app.use('/group', require('./routes/groupRoutes'));
+app.use('/message', require('./routes/messageRoutes'));

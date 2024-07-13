@@ -17,6 +17,9 @@ const userSchema=new Schema({
         type:String,
         required:true
     },
+    profile_pic:{
+        type:String
+    },
 });
 
 const User=mongoose.model('User',userSchema);

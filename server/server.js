@@ -67,7 +67,12 @@ socket.on('join_room', (data) => {
   socket.emit('chatroom_users', chatRoomUsers);
  });
 
-  
+ socket.on('send_message', (data) => {
+  const { message, username, room, __createdtime__ } = data;
+  console.log(data);
+  //push message to DB
+  io.in(room).emit('receive_message', data); // Send to all users in room, including sender
+});
 });
 
 server.listen(PORT, () => {

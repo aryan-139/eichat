@@ -2,6 +2,12 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import {SocketContext} from '../context/SocketContext';
 import { useState, useEffect } from 'react';
+import ChatDrawer from '../components/ChatDrawer';
+import ChatBox from '../components/ChatBox';
+import ChatUI from '../components/ChatUI';
+import SendMessage from '../components/SendMessage';
+import ChatHeader from '../components/chatbox/ChatHeader';
+import { Paper } from '@mui/material';
 
 const ChatPage = () => {
   const location = useLocation();
@@ -10,49 +16,25 @@ const ChatPage = () => {
   const [messagesReceived, setMessagesReceived] = useState([]);
   const [roomUsers, setRoomUsers] = useState([]);
 
- // Runs whenever a socket event is received from the server
- useEffect(() => {
-  socket.on('receive_message', (data) => {
-    console.log(data);
-    setMessagesReceived((state) => [
-      ...state,
-      {
-        message: data.message,
-        username: data.username,
-        __createdtime__: data.__createdtime__,
-      },
-    ]);
-  });
-
-  // Remove event listener on component unmount
-  return () => socket.off('receive_message');
-}, [socket]);
-
-//chatroom users total
+//total chatroom users
 useEffect(() => {
   socket.on('chatroom_users', (data) => {
-    console.log(data);
     setRoomUsers(data);
   });
 
   return () => socket.off('chatroom_users');
 }, [socket]);
 
-
-
   return (
     <div>
-      <h1>Chat Page</h1>
-      {messagesReceived.map((msg, i) => (
-        <div key={i}>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>{msg.username}</span>
-            
-          </div>
-          <p>{msg.message}</p>
-          <br />
-        </div>
-      ))}
+      <ChatDrawer roomUsers={roomUsers}/>
+      {/* <ChatBox roomName={"Test Room"}/> */}
+      <Paper sx={{ width: '100%', maxWidth: 980, margin: 'auto', marginTop: 2, borderRadius: 2, marginLeft: 46 }}>
+      <ChatHeader roomName={room}/>
+      <ChatUI username={userName} room={room}/>
+      <SendMessage username={userName} room={room}/>
+     
+      </Paper>
     </div>
   );
 };

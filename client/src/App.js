@@ -22,6 +22,8 @@ const App = () => {
     console.log('Creating a new room');
   };
 
+  const availableRooms=[{group_id: 'room1', group_name:'Mathematics Grade1'}, {group_id: 'room2', group_name:'Mathematics Grade2'}, {group_id: 'room3', group_name:'Mathematics Grade3'}, {group_id: 'room4', group_name:'Mathematics Grade4'}, {group_id: 'room5', group_name:'Mathematics Grade5'}, {group_id: 'room6', group_name:'Mathematics Grade6'}, {group_id: 'room7', group_name:'Mathematics Grade7'}, {group_id: 'room8', group_name:'Mathematics Grade8'}, {group_id: 'room9', group_name:'Mathematics Grade9'}, {group_id: 'room10', group_name:'Mathematics Grade10'}, {group_id: 'room11', group_name:'Mathematics Grade11'}, {group_id: 'room12', group_name:'Mathematics Grade12'}];
+
   return (
     <ThemeProvider theme={theme}>
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh" bgcolor={theme.palette.secondary.main}>
@@ -46,9 +48,11 @@ const App = () => {
               onChange={(e) => setRoom(e.target.value)}
               color="primary"
             >
-              <MenuItem value="room1">Room 1</MenuItem>
-              <MenuItem value="room2">Room 2</MenuItem>
-              <MenuItem value="room3">Room 3</MenuItem>
+             {availableRooms.map((room) => (
+                <MenuItem key={room.group_id} value={room.group_id}>
+                  {room.group_name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
 

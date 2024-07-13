@@ -25,12 +25,14 @@ useEffect(() => {
   return () => socket.off('chatroom_users');
 }, [socket]);
 
+
+
   return (
     <div>
       <ChatDrawer roomUsers={roomUsers}/>
       {/* <ChatBox roomName={"Test Room"}/> */}
       <Paper sx={{ width: '100%', maxWidth: 980, margin: 'auto', marginTop: 2, borderRadius: 2, marginLeft: 46 }}>
-      <ChatHeader roomName={room}/>
+      <ChatHeader username={userName} roomName={room} />
       <ChatUI username={userName} room={room}/>
       <SendMessage username={userName} room={room}/>
      

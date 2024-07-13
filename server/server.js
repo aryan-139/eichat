@@ -76,21 +76,42 @@ io.on('connection', (socket) => {
     socket.emit('chatroom_users', chatRoomUsers);
   });
 
+  // Send message to room
   socket.on('send_message', (data) => {
     const { message, username, room, __createdtime__ } = data;
     console.log(data);
     // Push message to DB (this part should have the code to save message to DB)
     io.in(room).emit('receive_message', data); // Send to all users in room, including sender
   });
+
+  //leave the room 
+  socket.on('leave_room', (data) => {
+    const { username, room } = data;
+    socket.leave(room);
+    console.log(`${username} left room: ${room} with socket id: ${socket.id}`);
+  
+    let __createdtime__ = new Date().toLocaleTimeString();
+  
+    // Send message to all users that someone left
+    socket.to(room).emit('receive_message', {
+      user: CHAT_BOT,
+      message: `${username} left the room`,
+      createdtime: __createdtime__,
+    });
+  
+    // Remove user from the room
+    allUsers = allUsers.filter((user) => user.socketId !== socket.id);
+    chatRoomUsers = allUsers.filter((user) => user.room === room);
+    socket.to(room).emit('chatroom_users', chatRoomUsers);
+    socket.emit('chatroom_users', chatRoomUsers);
+  });
+  
 });
+
 
 server.listen(PORT, () => {
   console.log(`Server is listening at port: ${PORT}`);
 });
-
-
-
-
 
 
 // Routes

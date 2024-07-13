@@ -27,7 +27,7 @@ useEffect(() => {
     <div>
       {/* <ChatDrawer roomUsers={roomUsers}/> */}
       {/* <ChatBox roomName={"Test Room"}/> */}
-      <ChatUI/>
+      <ChatUI username={userName} room={room}/>
       <SendMessage username={userName} room={room}/>
     </div>
   );

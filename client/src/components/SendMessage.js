@@ -9,8 +9,9 @@ const SendMessage = ({username,room}) => {
   function SendMessage(e) {
     e.preventDefault();
     if (inputText) {
+      const user = username;
       //console.log({username, room, message: inputText, createdtime: new Date().toISOString()})
-      socket.emit('send_message', {username, room, message: inputText, createdtime: new Date().toISOString()});
+      socket.emit('send_message', {user, room, message: inputText, createdtime: new Date().toLocaleTimeString()});
       setInputText('');
     }
   }

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Paper } from '@mui/material';
-import ChatHeader from './ChatHeader';
-import ChatMessages from './ChatMessages';
-import ChatInput from './ChatInput';
+import ChatHeader from './chatbox/ChatHeader';
+import ChatMessages from './chatbox/ChatMessages';
+import ChatInput from './chatbox/ChatInput';
 import { SocketContext } from '../context/SocketContext';
 
-const ChatBox = ({ roomName, messagesReceived }) => {
+const ChatBox = ({ roomName }) => {
   const [messages, setMessages] = useState([]);
   const socket = React.useContext(SocketContext);
+  const [messagesReceived, setMessagesReceived] = useState([]);
 
   // Function to handle sending a message
   const handleSendMessage = (message) => {
@@ -16,19 +17,24 @@ const ChatBox = ({ roomName, messagesReceived }) => {
       message,
       __createdtime__: new Date().toISOString()
     };
-    setMessages([...messages, newMessage]); // Add new message to state
-    socket.emit('send_message', newMessage); // Emit message to server
+    setMessages([...messages, newMessage]); 
+    socket.emit('send_message', newMessage); 
   };
-  // Effect to listen for new messages from socket
-  useEffect(() => {
-    socket.on('receive_message', (data) => {
-      console.log('Received message:', data);
-      setMessages((prevMessages) => [...prevMessages, data]);
-    });
 
-    return () => {
-      socket.off('receive_message');
-    };
+ //receives message from the sockets
+ useEffect(() => {
+    socket.on('receive_message', (data) => {
+    console.log(data);
+    setMessagesReceived((state) => [
+        ...state,
+        {
+          message: data.message,
+          username: data.user,
+          __createdtime__: data.__createdtime__,
+        },
+      ]);
+    });
+    return () => socket.off('receive_message');
   }, [socket]);
 
   // Effect to handle messagesReceived prop changes
@@ -42,9 +48,7 @@ const ChatBox = ({ roomName, messagesReceived }) => {
 
   return (
     <Paper sx={{ width: '100%', maxWidth: 1280, margin: 'auto', marginTop: 2, borderRadius: 2, marginLeft: 46 }}>
-      <ChatHeader roomName={roomName} />
-      <ChatMessages messages={messages} />
-      <ChatInput onSendMessage={handleSendMessage} />
+     
     </Paper>
   );
 };

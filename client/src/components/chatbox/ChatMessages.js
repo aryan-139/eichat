@@ -4,7 +4,6 @@ import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
 const ChatMessages = ({ messages }) => {
   return (
     <Box sx={{ height: '70vh', overflowY: 'scroll', padding: 2 }}>
-        {console.log(messages)}
       <List>
         {messages.map((msg, index) => (
           <ListItem key={index} alignItems="flex-start">

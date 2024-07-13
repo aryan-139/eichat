@@ -4,6 +4,8 @@ import {SocketContext} from '../context/SocketContext';
 import { useState, useEffect } from 'react';
 import ChatDrawer from '../components/ChatDrawer';
 import ChatBox from '../components/ChatBox';
+import ChatUI from '../components/ChatUI';
+import SendMessage from '../components/SendMessage';
 
 const ChatPage = () => {
   const location = useLocation();
@@ -11,21 +13,6 @@ const ChatPage = () => {
   const socket=React.useContext(SocketContext);
   const [messagesReceived, setMessagesReceived] = useState([]);
   const [roomUsers, setRoomUsers] = useState([]);
-
- //receives message from the sockets
- useEffect(() => {
-  socket.on('receive_message', (data) => {
-    setMessagesReceived((state) => [
-      ...state,
-      {
-        message: data.message,
-        username: data.username,
-        __createdtime__: data.__createdtime__,
-      },
-    ]);
-  });
-  return () => socket.off('receive_message');
-}, [socket]);
 
 //total chatroom users
 useEffect(() => {
@@ -38,18 +25,10 @@ useEffect(() => {
 
   return (
     <div>
-      <ChatDrawer roomUsers={roomUsers}/>
-      <ChatBox roomName={"TEST ROOM"} messagesReceived={messagesReceived}/>
-      {/* {messagesReceived.map((msg, i) => (
-        <div key={i}>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>{msg.username}</span>
-            
-          </div>
-          <p>{msg.message}</p>
-          <br />
-        </div>
-      ))} */}
+      {/* <ChatDrawer roomUsers={roomUsers}/> */}
+      {/* <ChatBox roomName={"Test Room"}/> */}
+      <ChatUI/>
+      <SendMessage username={userName} room={room}/>
     </div>
   );
 };

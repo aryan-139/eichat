@@ -1,31 +1,35 @@
-import React from 'react'
+import React from 'react';
 import { SocketContext } from '../context/SocketContext';
+import { Box, TextField, Button } from '@mui/material';
 
-const SendMessage = ({username,room}) => {
-  //inputText is storing the message value
+const SendMessage = ({ username, room }) => {
   const [inputText, setInputText] = React.useState('');
-  const socket=React.useContext(SocketContext);
+  const socket = React.useContext(SocketContext);
 
-  function SendMessage(e) {
+  const handleSendMessage = (e) => {
     e.preventDefault();
     if (inputText) {
       const user = username;
-      //console.log({username, room, message: inputText, createdtime: new Date().toISOString()})
-      socket.emit('send_message', {user, room, message: inputText, createdtime: new Date().toLocaleTimeString()});
+      socket.emit('send_message', {
+        user,
+        room,
+        message: inputText,
+        createdtime: new Date().toLocaleTimeString(),
+      });
       setInputText('');
     }
-  }
-  function handleInputChange(e) {
-    setInputText(e.target.value);
-  }
-  return (
-    <div>
-        <div className="chat-input">
-            <input type="text" placeholder="Type a message..." onChange={handleInputChange} />
-            <button onClick={SendMessage}>Send</button>
-        </div>
-    </div>
-  )
-}
+  };
 
-export default SendMessage
+  const handleInputChange = (e) => {
+    setInputText(e.target.value);
+  };
+
+  return (
+    <Box sx={{ display: 'flex', padding: 2, bottom: 0, backgroundColor: 'white'  }}>
+      <TextField fullWidth variant="outlined" value={inputText} onChange={handleInputChange} placeholder="Type your message..." />
+      <Button variant="contained" color="primary" onClick={handleSendMessage}>Send</Button>
+    </Box>
+  );
+};
+
+export default SendMessage;

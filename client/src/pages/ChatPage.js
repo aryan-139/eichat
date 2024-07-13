@@ -6,6 +6,8 @@ import ChatDrawer from '../components/ChatDrawer';
 import ChatBox from '../components/ChatBox';
 import ChatUI from '../components/ChatUI';
 import SendMessage from '../components/SendMessage';
+import ChatHeader from '../components/chatbox/ChatHeader';
+import { Paper } from '@mui/material';
 
 const ChatPage = () => {
   const location = useLocation();
@@ -25,10 +27,14 @@ useEffect(() => {
 
   return (
     <div>
-      {/* <ChatDrawer roomUsers={roomUsers}/> */}
+      <ChatDrawer roomUsers={roomUsers}/>
       {/* <ChatBox roomName={"Test Room"}/> */}
+      <Paper sx={{ width: '100%', maxWidth: 980, margin: 'auto', marginTop: 2, borderRadius: 2, marginLeft: 46 }}>
+      <ChatHeader roomName={room}/>
       <ChatUI username={userName} room={room}/>
       <SendMessage username={userName} room={room}/>
+     
+      </Paper>
     </div>
   );
 };

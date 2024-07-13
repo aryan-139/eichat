@@ -48,7 +48,7 @@ const ChatBox = ({ roomName }) => {
 
   return (
     <Paper sx={{ width: '100%', maxWidth: 1280, margin: 'auto', marginTop: 2, borderRadius: 2, marginLeft: 46 }}>
-     
+      
     </Paper>
   );
 };

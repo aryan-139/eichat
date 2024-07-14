@@ -39,6 +39,7 @@ const io = socketio(server, {
   },
 });
 
+
 let recent_chats = [];
 let chatRoom = '';
 let allUsers = [];
@@ -106,7 +107,6 @@ io.on('connection', (socket) => {
     catch(err){
       console.log("message not saved");
     }
-    // Push message to DB (this part should have the code to save message to DB)
     io.in(room).emit('receive_message', data); // Send to all users in room, including sender
   });
 

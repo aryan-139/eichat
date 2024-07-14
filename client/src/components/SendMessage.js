@@ -31,7 +31,7 @@ const SendMessage = ({ username, room }) => {
 
   return (
     <Box sx={{ display: 'flex', padding: 2, bottom: 0, backgroundColor: 'white'  }}>
-      <TextField fullWidth variant="outlined" value={inputText} onKeyPress={handleKeyPress} onChange={handleInputChange} placeholder="Type your message..." />
+      <TextField fullWidth variant="outlined" value={inputText} onKeyPress={handleKeyPress} onChange={handleInputChange} placeholder="Type your message... Hit <enter> to send" />
       <Button variant="contained" sx={{ backgroundColor: '#172B4D','&:hover': {  backgroundColor: '#0e1d33' }}} onClick={handleSendMessage}>Send</Button>
     </Box>
   );

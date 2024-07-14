@@ -76,6 +76,7 @@ const ChatDrawer = ({username, roomUsers}) => {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             backgroundColor: '#172B4D',
+            // backgroundImage: 'linear-gradient(10deg, #1d217e, #3136af)',
             color: 'white',
           },
         }}

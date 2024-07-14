@@ -3,6 +3,11 @@
 ## Overview
 Convo.ei is a real-time chat application that enables users to join chat rooms, send and receive messages, and fetch recent chat history. Built with a combination of Node.js, Express, MongoDB, and React, Convo.ei offers a seamless and responsive chat experience.
 
+## Requirement Analysis/ Product Research 
+
+[Chat App Research Doc](https://emphasized-capri-785.notion.site/Chat-App-876b19954a3e403f99d4a94228e6279a)
+
+
 ## Features
 - Real-time chat
 - Join chat rooms by ID
@@ -65,5 +70,6 @@ npm run start
 - User ID: uid12345
 - Chat Room ID: gid12345
 
-
+## Active Issues 
+- Check Issues 
 

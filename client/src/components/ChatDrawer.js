@@ -113,8 +113,10 @@ const ChatDrawer = ({username, roomUsers}) => {
               key={chat.uid}
               alignItems="flex-start"
               sx={{
+                border: '1px solid rgba(255, 255, 255, 0.3)',
+                borderRadius: '8px',
                 '&:hover': {
-                  backgroundColor: '#252D4A',
+                  backgroundColor: '#3A475F',
                 },
               }}
             >

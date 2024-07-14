@@ -12,7 +12,6 @@ const groupSchema=new Schema({
     },
     group_description:{
         type:String,
-        required:true
     },
     group_image:{
         type:String

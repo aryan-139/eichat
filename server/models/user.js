@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 const Schema=mongoose.Schema;
 
 const userSchema=new Schema({
-    contact_id:{
+    user_id:{
         type:String,
         required:true
     },
@@ -15,7 +15,6 @@ const userSchema=new Schema({
     },
     phone_number:{
         type:String,
-        required:true
     },
     profile_pic:{
         type:String

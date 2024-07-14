@@ -82,14 +82,10 @@ io.on('connection', (socket) => {
     const { message, username, room, __createdtime__ } = data;
     console.log(data);
     const newMessage={
-      messageId: Math.random().toString(36).substring(2, 9),
       from_user: data.user,
-      message_text: message,
-      sent_datetime: data.createdtime,
-      group_id: room,
-      is_read: false,
       to_user: room,
-      contact_id: data.user
+      message: message,
+      sent_time: data.createdtime,
     };
     console.log(newMessage);
     const messageDB =new Message(newMessage);

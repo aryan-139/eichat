@@ -6,7 +6,7 @@ const groupMemberSchema=new Schema({
         type:String,
         required:true
     },
-    contact_id:{
+    user_id:{
         type:String,
         required:true
     },
@@ -22,3 +22,5 @@ const groupMemberSchema=new Schema({
         type:String
     }
 });
+
+module.exports=mongoose.model('GroupMember',groupMemberSchema);

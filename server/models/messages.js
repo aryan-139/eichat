@@ -12,25 +12,17 @@ const messageSchema=new Schema({
         type:String,
         required:true
     },
-    message_text:{
+    message:{
         type:String,
         required:true
     },
-    sent_datetime:{
-        type:String,
-        required:true
-    },
-    contact_id:{
+    sent_time:{
         type:String,
         required:true
     },
     is_read:{
         type:Boolean,
         default:false
-    },
-    group_id:{
-        type:String,
-        required:true
     }
 });
 

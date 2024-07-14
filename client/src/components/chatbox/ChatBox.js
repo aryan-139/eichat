@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Paper } from '@mui/material';
-import ChatHeader from './chatbox/ChatHeader';
-import ChatMessages from './chatbox/ChatMessages';
-import ChatInput from './chatbox/ChatInput';
-import { SocketContext } from '../context/SocketContext';
+import ChatHeader from '../ChatHeader';
+import ChatMessages from './ChatMessages';
+import ChatInput from './ChatInput';
+import { SocketContext } from '../../context/SocketContext';
 
 const ChatBox = ({ roomName }) => {
   const [messages, setMessages] = useState([]);

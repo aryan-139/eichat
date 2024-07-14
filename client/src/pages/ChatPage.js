@@ -3,12 +3,12 @@ import { useLocation } from 'react-router-dom';
 import {SocketContext} from '../context/SocketContext';
 import { useState, useEffect } from 'react';
 import ChatDrawer from '../components/ChatDrawer';
-import ChatBox from '../components/ChatBox';
+import ChatBox from '../components/chatbox/ChatBox';
 import ChatUI from '../components/ChatUI';
 import SendMessage from '../components/SendMessage';
-import ChatHeader from '../components/chatbox/ChatHeader';
+import ChatHeader from '../components/ChatHeader';
 import { Paper } from '@mui/material';
-import ChatSidebar from '../components/ChatSidebar';
+import ChatSidebar from '../components/chatbox/ChatSidebar';
 
 const ChatPage = () => {
   const location = useLocation();

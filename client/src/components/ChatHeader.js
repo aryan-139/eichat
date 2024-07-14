@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppBar, Button, Toolbar, Typography } from '@mui/material';
-import { SocketContext } from '../../context/SocketContext';
+import { SocketContext } from '../context/SocketContext';
 import { useNavigate } from 'react-router-dom';
 
 const ChatHeader = ({ username, roomName }) => {

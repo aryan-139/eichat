@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SocketContext } from '../context/SocketContext';
 import { Box, Paper, Typography } from '@mui/material';
 
 const ChatUI = ({ username, room }) => {
   const socket = React.useContext(SocketContext);
   const [messageArray, setMessageArray] = React.useState([]);
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     const handleReceiveMessage = (data) => {
@@ -15,6 +16,32 @@ const ChatUI = ({ username, room }) => {
     socket.on('receive_message', handleReceiveMessage);
     return () => socket.off('receive_message', handleReceiveMessage);
   }, [socket]);
+
+  // Fetch last 100 messages
+  useEffect(() => {
+    socket.on('receive_group_chats', (chats) => {
+      const formattedChats = chats.map((chat) => ({
+        user: chat.from_user,
+        message: chat.message,
+        createdtime: chat.sent_time,
+      }));
+      console.log(formattedChats);
+      setMessageArray(formattedChats.reverse());
+    });
+
+    return () => socket.off('receive_group_chats');
+  }, [socket]);
+
+  // Scroll to bottom when messageArray changes
+  useEffect(() => {
+    scrollToBottom();
+  }, [messageArray]);
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  };
 
   return (
     <Box sx={{ padding: 7 }}>
@@ -34,6 +61,7 @@ const ChatUI = ({ username, room }) => {
             </Box>
           );
         })}
+        <div ref={messagesEndRef} />
       </Box>
     </Box>
   );

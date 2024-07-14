@@ -44,6 +44,22 @@ let recent_chats = [];
 let chatRoom = '';
 let allUsers = [];
 
+// Fetch last 100 messages
+const fetchLast100Messages = async (room) => {
+  try {
+    const last100messages = await Message.find({ to_user: room })
+      .sort({ sent_time: -1 }) 
+      .limit(100); 
+  
+    console.log(last100messages);
+    return last100messages; 
+  } catch (error) {
+    console.error('Error fetching last 100 messages:', error);
+    throw error; 
+  }
+};
+
+
 io.on('connection', (socket) => {
   console.log('A user connected with socket_id:' + socket.id);
 
@@ -86,6 +102,15 @@ io.on('connection', (socket) => {
     chatRoomUsers = allUsers.filter((user) => user.room === room);
     socket.to(room).emit('chatroom_users', chatRoomUsers);
     socket.emit('chatroom_users', chatRoomUsers);
+
+    // Fetch last 100 messages
+    fetchLast100Messages(room)
+      .then((last100messages) => {
+        socket.emit('receive_group_chats', last100messages);
+      })
+      .catch((error) => {
+        console.error('Error fetching last 100 messages:', error);
+      });
   }
   });
 

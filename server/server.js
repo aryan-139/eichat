@@ -139,6 +139,19 @@ io.on('connection', (socket) => {
     .limit(10);
     socket.emit('receive_recent_chats', recent_chats);
   })
+
+  // Disconnect
+  socket.on('disconnect',()=>{
+    console.log('User disconnected from the chat');
+    allUsers = allUsers.filter((user) => user.socketId !== socket.id);
+    chatRoomUsers = allUsers.filter((user) => user.room === chatRoom);
+    socket.to(chatRoom).emit('chatroom_users', chatRoomUsers);
+    socket.to(chatRoom).emit('receive_message', {
+      user: CHAT_BOT,
+      message: `A user left the room`,
+      createdtime: new Date().toLocaleTimeString(),
+    });
+  })
   
 });
 

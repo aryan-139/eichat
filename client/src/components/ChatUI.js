@@ -8,6 +8,7 @@ const ChatUI = ({ username, room }) => {
 
   useEffect(() => {
     const handleReceiveMessage = (data) => {
+      console.log('Received message:', data);
       setMessageArray((prevMessages) => [...prevMessages, data]);
     };
 

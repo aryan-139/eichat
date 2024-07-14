@@ -13,18 +13,11 @@ const App = () => {
   const [newRoom, setNewRoom] = useState('');
   const [roomDescription, setRoomDescription] = useState('');
   const [availableRooms, setAvailableRooms] = useState([
-    { group_id: 'room1', group_name: 'Mathematics Grade1' },
-    { group_id: 'room2', group_name: 'Mathematics Grade2' },
-    { group_id: 'room3', group_name: 'Mathematics Grade3' },
-    { group_id: 'room4', group_name: 'Mathematics Grade4' },
-    { group_id: 'room5', group_name: 'Mathematics Grade5' },
-    { group_id: 'room6', group_name: 'Mathematics Grade6' },
-    { group_id: 'room7', group_name: 'Mathematics Grade7' },
-    { group_id: 'room8', group_name: 'Mathematics Grade8' },
-    { group_id: 'room9', group_name: 'Mathematics Grade9' },
-    { group_id: 'room10', group_name: 'Mathematics Grade10' },
-    { group_id: 'room11', group_name: 'Mathematics Grade11' },
-    { group_id: 'room12', group_name: 'Mathematics Grade12' },
+    { group_id: 'gid12345', group_name: 'Mathematics Grade1' },
+    { group_id: 'gid12346', group_name: 'Mathematics Grade2' },
+    { group_id: 'gid12347', group_name: 'Mathematics Grade3' },
+    { group_id: 'gid12348', group_name: 'Mathematics Grade4' },
+    { group_id: 'gid12349', group_name: 'Mathematics Grade5' },
   ]);
 
   const handleJoin = () => {

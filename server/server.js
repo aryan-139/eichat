@@ -39,6 +39,7 @@ const io = socketio(server, {
   },
 });
 
+let recent_chats = [];
 let chatRoom = '';
 let allUsers = [];
 
@@ -50,9 +51,18 @@ io.on('connection', (socket) => {
   // Join a room
   socket.on('join_room', (data) => {
     const { userName, room } = data;
-    socket.join(room);
-    console.log(`${userName} joined room: ${room} with socket id: ${socket.id}`);
-
+    //check if already present in the room
+    if(allUsers.some(user => user.userName === userName && user.room === room)){
+      console.log(`${userName} already present in room: ${room}`);
+      socket.emit('receive_message', {
+        user: CHAT_BOT,
+        message: `You are already present in the room ${room}`,
+        createdtime: new Date().toLocaleTimeString(),
+      });
+    }
+    else{
+      socket.join(room);
+      console.log(`${userName} joined room: ${room} with socket id: ${socket.id}`);
     let __createdtime__ = new Date().toLocaleTimeString();
 
     // Send message to all users that someone joined
@@ -75,6 +85,7 @@ io.on('connection', (socket) => {
     chatRoomUsers = allUsers.filter((user) => user.room === room);
     socket.to(room).emit('chatroom_users', chatRoomUsers);
     socket.emit('chatroom_users', chatRoomUsers);
+  }
   });
 
   // Send message to room
@@ -120,6 +131,14 @@ io.on('connection', (socket) => {
     socket.to(room).emit('chatroom_users', chatRoomUsers);
     socket.emit('chatroom_users', chatRoomUsers);
   });
+
+  // Get recent chats
+  socket.on('get_recent_chats', async({uid})=>{
+    recent_chats=await Message.find({ $or: [ { from_user: uid }, { to_user: uid } ] })
+    .sort({ sent_time: -1 })
+    .limit(10);
+    socket.emit('receive_recent_chats', recent_chats);
+  })
   
 });
 

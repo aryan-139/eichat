@@ -1,35 +1,69 @@
 import * as React from 'react';
 import { Box, Drawer, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography, TextField, Button } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
+import { SocketContext } from '../context/SocketContext';
 
 const drawerWidth = 350;
 
-const recentChats = [
-  {
-    username: 'John Doe',
-    message: 'Hello',
-    time: '12:00',
-    uid: '1234',
-  },
-  {
-    username: 'Jane Doe',
-    message: 'Hello',
-    time: '12:00',
-    uid: '1234',
-  },
-];
+// const recentChats = [
+//   {
+//     username: 'John Doe',
+//     message: 'Hello',
+//     time: '12:00',
+//     uid: '1234',
+//   }
+// ];
 
-const ChatDrawer = () => {
+const ChatDrawer = ({username, roomUsers}) => {
   const [searchTerm, setSearchTerm] = React.useState('');
   const [currentChat, setCurrentChat] = React.useState(null);
-
+  const [activeUsers, setActiveUsers] = React.useState(roomUsers);
+  const[recentChats, setRecentChats] = React.useState([]);
+  const socket = React.useContext(SocketContext); 
+  
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
   const filteredChats = recentChats.filter((chat) =>
-    chat.username.toLowerCase().includes(searchTerm.toLowerCase())
+  chat.username && chat.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  function getActiveUsers(){
+    console.log("Active Users");
+    // console.log(roomUsers);
+    // setActiveUsers(roomUsers);
+  }
+
+  React.useEffect(() => {
+    const fetchRecentChats=()=>{
+      socket.emit('get_recent_chats', {uid: username});
+    }
+    fetchRecentChats();
+    socket.on('receive_recent_chats',(chats)=>{
+      console.log(chats);
+      //transform the chats to the format of recentChats
+      const to_recent_chats_format = chats.map((chat) => ({
+        username: chat.to_user,
+        message: chat.message,
+        time: chat.sent_time,
+        uid: chat.from_user,
+      }));
+      setRecentChats(to_recent_chats_format);
+      console.log(to_recent_chats_format);    
+    }
+    );
+
+    socket.on('send_message', fetchRecentChats);
+    socket.on('receive_message', fetchRecentChats);
+    return () => {
+      socket.off('recent_chats');
+      socket.off('send_message');
+      socket.off('receive_message');
+    };
+  },[]);
+
+
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -121,7 +155,7 @@ const ChatDrawer = () => {
         <Button variant="contained" fullWidth sx={{ backgroundColor: '#172B4D', color: 'white', '&:hover': { backgroundColor: '#0e1d33' } }}>
             Join Group
           </Button>
-          <Button variant="contained" fullWidth sx={{backgroundColor: '#172B4D', color: 'white', '&:hover': { backgroundColor: '#0e1d33' } }}>
+          <Button variant="contained" onClick={getActiveUsers()} fullWidth sx={{backgroundColor: '#172B4D', color: 'white', '&:hover': { backgroundColor: '#0e1d33' } }}>
             Active Users
           </Button>
         </Box>

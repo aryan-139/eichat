@@ -11,10 +11,20 @@ const ChatUI = ({ username, room }) => {
       console.log('Received message:', data);
       setMessageArray((prevMessages) => [...prevMessages, data]);
     };
-
+    
     socket.on('receive_message', handleReceiveMessage);
     return () => socket.off('receive_message', handleReceiveMessage);
   }, [socket]);
+
+  // useEffect(() => {
+  //   // Fetch chat history when room changes
+  //   socket.emit('get_room_messages', { room });
+  //   socket.on('room_messages', (messages) => {
+  //     setMessageArray(messages);
+  //   });
+
+  //   return () => socket.off('room_messages');
+  // }, [socket, room]);
 
   return (
     <Box sx={{ padding: 7 }}>

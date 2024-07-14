@@ -15,6 +15,8 @@ const ChatPage = () => {
   const { userName, room } = location.state || {};
   const socket=React.useContext(SocketContext);
   const [roomUsers, setRoomUsers] = useState([]);
+  const [currentChat, setCurrentChat] = useState({username: 'Chatbot'});
+  
 
 //total chatroom users
 useEffect(() => {
@@ -25,17 +27,21 @@ useEffect(() => {
   return () => socket.off('chatroom_users');
 }, [socket]);
 
+const handleChatSelect = (chat) => {
+  console.log('Chat selected:', chat);
+  setCurrentChat(chat);
+};
 
 
   return (
     <div>
       {/* <ChatSidebar roomUsers={roomUsers}/> */}
-      <ChatDrawer username={userName} roomUsers={roomUsers}/>
+      <ChatDrawer username={userName} roomUsers={roomUsers} onChatSelect={handleChatSelect}/>
       {/* <ChatBox roomName={"Test Room"}/> */}
       <Paper sx={{ width: '100%', maxWidth: 1280, margin: 'auto', marginTop: 2, borderRadius: 2, marginLeft: 46 }}>
-      <ChatHeader username={userName} roomName={room} />
-      <ChatUI username={userName} room={room}/>
-      <SendMessage username={userName} room={room}/>
+      <ChatHeader username={userName} roomName={currentChat.username} />
+      <ChatUI username={userName} room={currentChat.username}/>
+      <SendMessage username={userName} room={currentChat.username}/>
      
       </Paper>
     </div>

@@ -24,6 +24,7 @@ const SendMessage = ({ username, room }) => {
     setInputText(e.target.value);
   };
   const handleKeyPress = (e) => {
+    console.log("Key Pressed");
     if (e.key === 'Enter') {
       handleSendMessage(e);
     }

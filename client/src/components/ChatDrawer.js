@@ -14,12 +14,20 @@ const drawerWidth = 350;
 //   }
 // ];
 
-const ChatDrawer = ({username, roomUsers}) => {
+const ChatDrawer = ({username, roomUsers, onChatSelect}) => {
   const [searchTerm, setSearchTerm] = React.useState('');
   const [currentChat, setCurrentChat] = React.useState(null);
   const [activeUsers, setActiveUsers] = React.useState(roomUsers);
   const[recentChats, setRecentChats] = React.useState([]);
   const socket = React.useContext(SocketContext); 
+
+  //handling the click on chat to different chats
+  const handleClickChat = (chat) => {
+    setCurrentChat(chat);
+    onChatSelect(chat);
+    socket.emit('join_room', { userName: username, room: chat.username });
+    console.log(`Clicked on chat: Username - ${chat.username}, Room - ${chat.room}`);
+  };
   
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -107,7 +115,7 @@ const ChatDrawer = ({username, roomUsers}) => {
           </Box>
           {filteredChats.map((chat) => (
             <ListItem
-              onClick={() => setCurrentChat(chat)}
+              onClick={() => handleClickChat(chat)}
               key={chat.uid}
               alignItems="flex-start"
               sx={{

@@ -52,6 +52,7 @@ npm run start
 ## Database Schema
 ![Alt text](image-1.png)
 
+
 ## Screenshots
 ![Alt text](image-2.png)
 - Home Page (Styling in progress)

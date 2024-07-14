@@ -56,12 +56,12 @@ const App = () => {
           </FormControl>
 
           <FormControl fullWidth margin="normal" sx={{ mb: 2 }}>
-            <InputLabel id="room-select-label">Select Room</InputLabel>
-            <Select labelId="room-select-label" id="room-select" value={room} label="Select Room" onChange={(e) => setRoom(e.target.value)} color="primary">
+            <TextField label="Select Room" variant="outlined" value={room} onChange={(e) => setRoom(e.target.value)} color="primary" />
+            {/* <Select labelId="room-select-label" id="room-select" value={room} label="Select Room" onChange={(e) => setRoom(e.target.value)} color="primary">
               {availableRooms.map((room) => (
                 <MenuItem key={room.group_id} value={room.group_id}>{room.group_name}</MenuItem>
               ))}
-            </Select>
+            </Select> */}
           </FormControl>
 
           <Button variant="outlined" color="primary" onClick={handleCreateRoom} fullWidth sx={{ mb: 2 }}>Create Room</Button>

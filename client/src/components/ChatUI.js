@@ -6,10 +6,17 @@ const ChatUI = ({ username, room }) => {
   const socket = React.useContext(SocketContext);
   const [messageArray, setMessageArray] = React.useState([]);
   const messagesEndRef = useRef(null);
+  const [dayState, setDayState] = React.useState('TODAY');
+
+  // const sendSoundRef=useRef(null);
+  // const receiveSoundRef=useRef(null);
 
   useEffect(() => {
     const handleReceiveMessage = (data) => {
       console.log('Received message:', data);
+      // if (sendSoundRef.current) {
+      //   sendSoundRef.current.play();
+      // }
       setMessageArray((prevMessages) => [...prevMessages, data]);
     };
 
@@ -44,7 +51,11 @@ const ChatUI = ({ username, room }) => {
   };
 
   return (
-    <Box sx={{ padding: 7 }}>
+    
+    <Box sx={{ marginLeft:12, marginRight:12, marginBottom: 5, marginTop:5, }}>
+      {/* <audio ref={sendSoundRef} src="../../public/message_sent.mp3"/>
+      <audio ref={receiveSoundRef} src="../../public/message_received.mp3"/> */}
+      <Typography variant="body2" sx={{padding:'2px 8px',borderRadius:'12px',fontSize:'0.9rem',color:'#4A4A4A', marginBottom: 2, justifyContent:'center',display: 'flex', justifyContent: 'center', alignItems: 'center' }}> {dayState} </Typography>
       <Box sx={{ maxHeight: '70vh', overflowY: 'auto', marginBottom: 2, minHeight: '65vh' }}>
         {messageArray.map((message, index) => {
           const isOwnMessage = message.user === username;

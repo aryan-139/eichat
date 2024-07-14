@@ -3,7 +3,7 @@ import { Box, Drawer, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typo
 import ChatIcon from '@mui/icons-material/Chat';
 import { SocketContext } from '../context/SocketContext';
 
-const drawerWidth = 350;
+const drawerWidth = 420;
 
 // const recentChats = [
 //   {

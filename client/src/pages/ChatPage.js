@@ -32,7 +32,7 @@ useEffect(() => {
       {/* <ChatSidebar roomUsers={roomUsers}/> */}
       <ChatDrawer username={userName} roomUsers={roomUsers}/>
       {/* <ChatBox roomName={"Test Room"}/> */}
-      <Paper sx={{ width: '100%', maxWidth: 1280, margin: 'auto', marginTop: 2, borderRadius: 2, marginLeft: 46 }}>
+      <Paper sx={{ width: '90%', maxWidth: 1280, margin: 'auto', marginTop: 0, borderRadius: 2, marginLeft: 52, marginRight:300 }}>
       <ChatHeader username={userName} roomName={room} />
       <ChatUI username={userName} room={room}/>
       <SendMessage username={userName} room={room}/>

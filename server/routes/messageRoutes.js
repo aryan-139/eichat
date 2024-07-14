@@ -37,4 +37,16 @@ router.post('/get_recent_chats', async (req, res) => {
     }
 });
 
+//get chats of a group by to_user
+router.post('/get_group_chats', async (req, res) => {
+    try {
+        const chats = await Message.find({ to_user: req.body.to_user })
+            .sort({ sent_time: -1 })
+            .limit(100);
+        res.send(chats);
+    } catch (e) {
+        res.status(500).send();
+    }
+});
+
 module.exports = router;

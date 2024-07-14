@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Drawer, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography, TextField, Button } from '@mui/material';
+import { Box, Drawer, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography, TextField, Button, Modal, Fade } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import { SocketContext } from '../context/SocketContext';
 
@@ -19,6 +19,7 @@ const ChatDrawer = ({username, roomUsers}) => {
   const [currentChat, setCurrentChat] = React.useState(null);
   const [activeUsers, setActiveUsers] = React.useState(roomUsers);
   const[recentChats, setRecentChats] = React.useState([]);
+  const [openModal, setOpenModal] = React.useState(false);
   const socket = React.useContext(SocketContext); 
   
   const handleSearchChange = (event) => {
@@ -29,11 +30,11 @@ const ChatDrawer = ({username, roomUsers}) => {
   chat.username && chat.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  function getActiveUsers(){
-    console.log("Active Users");
-    // console.log(roomUsers);
-    // setActiveUsers(roomUsers);
-  }
+  const getActiveUsers = () => {
+    console.log('Active Users:', roomUsers);
+    setActiveUsers(roomUsers);
+    setOpenModal(true);
+  };
 
   React.useEffect(() => {
     const fetchRecentChats=()=>{
@@ -63,8 +64,9 @@ const ChatDrawer = ({username, roomUsers}) => {
     };
   },[]);
 
-
-
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
   return (
     <Box sx={{ display: 'flex' }}>
       <Drawer
@@ -155,11 +157,54 @@ const ChatDrawer = ({username, roomUsers}) => {
         <Button variant="contained" fullWidth sx={{ backgroundColor: '#172B4D', color: 'white', '&:hover': { backgroundColor: '#0e1d33' } }}>
             Join Group
           </Button>
-          <Button variant="contained" onClick={getActiveUsers()} fullWidth sx={{backgroundColor: '#172B4D', color: 'white', '&:hover': { backgroundColor: '#0e1d33' } }}>
+          <Button variant="contained" onClick={getActiveUsers} fullWidth sx={{backgroundColor: '#172B4D', color: 'white', '&:hover': { backgroundColor: '#0e1d33' } }}>
             Active Users
           </Button>
         </Box>
       </Drawer>
+
+
+
+
+
+
+
+
+      {/* Modal for Active Users */}
+      <Modal
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="active-users-modal"
+        aria-describedby="modal-displaying-active-users"
+        closeAfterTransition
+      >
+        <Fade in={openModal}>
+          <Box sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: '8px',
+            width: '80vw',
+            maxWidth: '400px',
+          }}>
+            <Typography variant="h5" sx={{ mb: 2 }}>Active Users</Typography>
+            <List>
+              {roomUsers.map((user, index) => (
+                <ListItem key={index}>
+                  <ListItemAvatar>
+                    <Avatar alt={user.userName} src="/static/images/avatar/1.jpg" />
+                  </ListItemAvatar>
+                  <ListItemText primary={user.userName} />
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </Fade>
+      </Modal>
     </Box>
   );
 };

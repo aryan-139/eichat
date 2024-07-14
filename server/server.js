@@ -39,9 +39,26 @@ const io = socketio(server, {
   },
 });
 
+
 let recent_chats = [];
 let chatRoom = '';
 let allUsers = [];
+
+// Fetch last 100 messages
+const fetchLast100Messages = async (room) => {
+  try {
+    const last100messages = await Message.find({ to_user: room })
+      .sort({ sent_time: -1 }) 
+      .limit(100); 
+  
+    console.log(last100messages);
+    return last100messages; 
+  } catch (error) {
+    console.error('Error fetching last 100 messages:', error);
+    throw error; 
+  }
+};
+
 
 io.on('connection', (socket) => {
   console.log('A user connected with socket_id:' + socket.id);
@@ -85,6 +102,15 @@ io.on('connection', (socket) => {
     chatRoomUsers = allUsers.filter((user) => user.room === room);
     socket.to(room).emit('chatroom_users', chatRoomUsers);
     socket.emit('chatroom_users', chatRoomUsers);
+
+    // Fetch last 100 messages
+    fetchLast100Messages(room)
+      .then((last100messages) => {
+        socket.emit('receive_group_chats', last100messages);
+      })
+      .catch((error) => {
+        console.error('Error fetching last 100 messages:', error);
+      });
   }
   });
 
@@ -106,7 +132,6 @@ io.on('connection', (socket) => {
     catch(err){
       console.log("message not saved");
     }
-    // Push message to DB (this part should have the code to save message to DB)
     io.in(room).emit('receive_message', data); // Send to all users in room, including sender
   });
 
@@ -138,6 +163,19 @@ io.on('connection', (socket) => {
     .sort({ sent_time: -1 })
     .limit(10);
     socket.emit('receive_recent_chats', recent_chats);
+  })
+
+  // Disconnect
+  socket.on('disconnect',()=>{
+    console.log('User disconnected from the chat');
+    allUsers = allUsers.filter((user) => user.socketId !== socket.id);
+    chatRoomUsers = allUsers.filter((user) => user.room === chatRoom);
+    socket.to(chatRoom).emit('chatroom_users', chatRoomUsers);
+    socket.to(chatRoom).emit('receive_message', {
+      user: CHAT_BOT,
+      message: `A user left the room`,
+      createdtime: new Date().toLocaleTimeString(),
+    });
   })
   
 });

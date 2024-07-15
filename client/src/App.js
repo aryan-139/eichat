@@ -6,15 +6,15 @@ import { SocketContext } from './context/SocketContext';
 import { validateUID } from './utils/landing_page_utils/userChecks';
 import { validateRoom } from './utils/landing_page_utils/groupChecks';
 import CreateRoomModal from './components/CreateRoomModal';
+import CreateUserModal from './components/CreateUserModal';
 
 const App = () => {
   const socket = React.useContext(SocketContext);
   const [userName, setUsername] = useState('');
   const [room, setRoom] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const navigate = useNavigate();
-  const [newRoom, setNewRoom] = useState('');
-  const [roomDescription, setRoomDescription] = useState('');
 
   const handleJoin = () => {
     let resUID=validateUID(userName);
@@ -27,6 +27,11 @@ const App = () => {
     }
     navigate('/chat', { state: { userName, room } });
     }
+  };
+
+  const handleCreateUser = () => {
+    console.log('Creating new user');
+    setIsUserModalOpen(true);
   };
 
   const handleCreateRoom = () => {
@@ -44,6 +49,10 @@ const App = () => {
     setIsModalOpen(false);
   };
 
+  const handleUserCreatedSubmit = () => {
+    setIsUserModalOpen(false);
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', bgcolor: theme.palette.secondary.main }}>
@@ -57,8 +66,10 @@ const App = () => {
           </FormControl>
 
           <Button variant="outlined" color="primary" onClick={handleCreateRoom} fullWidth sx={{ mb: 2 }}>Create Room</Button>
+          <Button variant="outlined" color="primary" onClick={handleCreateUser} sx={{mb:2}} fullWidth>Create New User</Button>
           <Button variant="contained" color="primary" onClick={handleJoin} fullWidth>Join</Button>
           <CreateRoomModal isModalOpen={isModalOpen} handleCloseModal={handleCloseModal} handleCreateRoomSubmit={handleCreateRoomSubmit} />
+          <CreateUserModal isModalOpen={isUserModalOpen} handleCloseModal={()=>setIsUserModalOpen(false)} handleUserCreatedSubmit={handleUserCreatedSubmit} />
         </Box>
       </Box>
     </ThemeProvider>

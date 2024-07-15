@@ -21,7 +21,7 @@ const CreateRoomModal = ({ isModalOpen, handleCloseModal, handleCreateRoomSubmit
         };
     axiosApi.post('/group/add_group', newRoomData)
     .then((response) => {
-        console.log(response);
+        alert('Room Created');
     })
     .catch((error) => {
         console.error('Error creating new room:', error);

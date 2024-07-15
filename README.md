@@ -55,7 +55,7 @@ npm run start
 7. Enjoy chatting!
 
 ## Database Schema
-![Alt text](image-1.png)
+![Alt text](image-4.png)
 
 
 ## Screenshots

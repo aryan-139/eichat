@@ -17,6 +17,21 @@ router.post('/add_user', async (req, res) => {
     }
 });
 
+//get user name from user_id
+router.post('/get_user_name', async (req, res) => {
+    try {
+        const user = await User.findOne({ user_id: req.body.user_id });
+        if (user) {
+            res.send(user);
+        } else {
+            res.status(404).send();
+        }
+    } catch (e) {
+        res.status(500).send();
+    }
+}
+);
+
 // Get all users
 router.get('/get_users', async (req, res) => {
     try {

@@ -20,7 +20,7 @@ Convo.ei is a real-time chat application that enables users to join chat rooms, 
 - End to End Encryption (not yet)
 - Text compression to DB (not yet)
 - Text decompression from DB (not yet)
-- User authentication (not yet)
+- User Authentication
 - Create New User 
 - User Validations 
 - Room Validations

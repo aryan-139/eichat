@@ -7,6 +7,8 @@ import { validateUID } from './utils/landing_page_utils/userChecks';
 import { validateRoom } from './utils/landing_page_utils/groupChecks';
 import CreateRoomModal from './components/CreateRoomModal';
 import CreateUserModal from './components/CreateUserModal';
+import { checkIfUserExists } from './api/userApi';
+import { checkIfGroupExists } from './api/groupApi';
 
 const App = () => {
   const socket = React.useContext(SocketContext);
@@ -16,19 +18,32 @@ const App = () => {
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleJoin = () => {
-    let resUID=validateUID(userName);
-    let resRoom=validateRoom(room);
-    if(resUID===false){alert('Invalid UID');}else if(resRoom===false){alert('Invalid Room');}
-    else{
-      console.log('Joining room:', room, 'with userName:', userName);
+  //login and group verification
+  const handleJoin = async () => {
+    if (!validateUID(userName)) {
+      alert('Invalid UID');
+      return;
+    }
+    if (!validateRoom(room)) {
+      alert('Invalid Room');
+      return;
+    }
+    const userExists = await checkIfUserExists(userName);
+    if (!userExists) {
+      alert('User does not exist');
+      return;
+    }
+    const groupExists = await checkIfGroupExists(room);
+    if (!groupExists) {
+      alert('Group does not exist');
+      return;
+    }
+    console.log('Joining room:', room, 'with userName:', userName);
     if (room !== '' && userName !== '') {
       socket.emit('join_room', { userName, room });
-    }
-    navigate('/chat', { state: { userName, room } });
+      navigate('/chat', { state: { userName, room } });
     }
   };
-
   const handleCreateUser = () => {
     console.log('Creating new user');
     setIsUserModalOpen(true);

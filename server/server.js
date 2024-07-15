@@ -73,13 +73,13 @@ io.on('connection', (socket) => {
       socket.emit('receive_message', {
         user: CHAT_BOT,
         message: `You are already present in the room ${room}`,
-        createdtime: new Date().toLocaleTimeString(),
+        createdtime: new Date().toISOString(),
       });
     }
     else{
       socket.join(room);
       console.log(`${userName} joined room: ${room} with socket id: ${socket.id}`);
-    let __createdtime__ = new Date().toLocaleTimeString();
+    let __createdtime__ = new Date().toISOString();
 
     // Send message to all users that someone joined
     socket.to(room).emit('receive_message', {
@@ -139,7 +139,7 @@ io.on('connection', (socket) => {
     socket.leave(room);
     console.log(`${username} left room: ${room} with socket id: ${socket.id}`);
   
-    let __createdtime__ = new Date().toLocaleTimeString();
+    let __createdtime__ = new Date().toISOString();
   
     // Send message to all users that someone left
     socket.to(room).emit('receive_message', {

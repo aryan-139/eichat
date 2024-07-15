@@ -29,9 +29,9 @@ router.get('/get_users', async (req, res) => {
 //login status
 router.post('/login', async (req, res) => {
     try {
-        const phone_number = req.body.phone_number;
+        const user_id=req.body.user_id;
         const user = await User.findOne({
-            phone_number
+            user_id
         });
         if (!user) {
             return res.status(404).send('User not found');

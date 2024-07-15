@@ -51,7 +51,6 @@ const fetchLast100Messages = async (room) => {
       .sort({ sent_time: -1 }) 
       .limit(100); 
   
-    console.log(last100messages);
     return last100messages; 
   } catch (error) {
     console.error('Error fetching last 100 messages:', error);

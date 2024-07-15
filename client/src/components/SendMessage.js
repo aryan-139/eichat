@@ -14,7 +14,7 @@ const SendMessage = ({ username, room }) => {
         user,
         room,
         message: inputText,
-        createdtime: new Date().toLocaleTimeString(),
+        createdtime: new Date().toISOString(),
       });
       setInputText('');
     }

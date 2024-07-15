@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { SocketContext } from '../context/SocketContext';
 import { Box, Paper, Typography } from '@mui/material';
+import { formatDateTime } from '../utils/formatDateTime';
 
 const ChatUI = ({ username, room }) => {
   const socket = React.useContext(SocketContext);
@@ -50,6 +51,8 @@ const ChatUI = ({ username, room }) => {
     }
   };
 
+  
+
   return (
     
     <Box sx={{ marginLeft:12, marginRight:12, marginBottom: 5, marginTop:5, }}>
@@ -66,7 +69,7 @@ const ChatUI = ({ username, room }) => {
                   <strong>{isOwnMessage ? 'You' : message.user}:</strong> {message.message}
                 </Typography>
                 <Typography variant="caption" sx={{ display: 'block', textAlign: 'right' }}>
-                  {message.createdtime}
+                {formatDateTime(message.createdtime)}
                 </Typography>
               </Paper>
             </Box>

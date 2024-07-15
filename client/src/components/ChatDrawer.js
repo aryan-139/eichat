@@ -2,17 +2,9 @@ import * as React from 'react';
 import { Box, Drawer, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography, TextField, Button, Modal, Fade } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import { SocketContext } from '../context/SocketContext';
+import { formatDateTime } from '../utils/formatDateTime';
 
 const drawerWidth = 420;
-
-// const recentChats = [
-//   {
-//     username: 'John Doe',
-//     message: 'Hello',
-//     time: '12:00',
-//     uid: '1234',
-//   }
-// ];
 
 const ChatDrawer = ({username, roomUsers}) => {
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -144,7 +136,7 @@ const ChatDrawer = ({username, roomUsers}) => {
                       variant="body2"
                       sx={{ display: 'inline', float: 'right', color: 'white' }}
                     >
-                      {chat.time}
+                      {formatDateTime(chat.time)}
                     </Typography>
                   </>
                 }

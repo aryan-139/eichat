@@ -12,4 +12,16 @@ const checkIfGroupExists = async (group_id) => {
     }
 }
 
-export { checkIfGroupExists };
+const getGroupNameByID=async (group_id)=>{
+    try {
+        const res = await axiosApi.post('/group/get_group_name', { group_id });
+        if (res.status === 200) {
+            return res.data;
+        }
+    } catch (error) {
+        console.error('Error getting group name:', error);
+        return false;
+    }
+}
+
+export { checkIfGroupExists, getGroupNameByID };

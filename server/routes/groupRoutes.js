@@ -13,6 +13,22 @@ router.post('/add_group', async (req, res) => {
     }
 });
 
+//get group name 
+router.post('/get_group_name', async (req, res) => {
+    try {
+        const group = await Group.findOne({ group_id:
+            req.body.group_id });
+        if (group) {
+            res.send(group);
+        }
+        else {
+            res.status(404).send();
+        }
+    } catch (e) {
+        res.status(500).send();
+    }
+});
+
 // Get all groups
 router.get('/get_groups', async (req, res) => {
     try {

@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppBar, Avatar, Button, Icon, Toolbar, Typography } from '@mui/material';
 import { SocketContext } from '../context/SocketContext';
 import { useNavigate } from 'react-router-dom';
+import { getGroupNameByID } from '../api/groupApi';
 
 const ChatHeader = ({ username, roomName }) => {
+  const [groupName, setGroupName] = useState('');
   const socket = React.useContext(SocketContext);
   const navigate = useNavigate();
-  const firstChar = roomName.charAt(0).toUpperCase();
+  const firstChar = groupName.charAt(0).toUpperCase();
+
+  //get group name from group_id
+  useEffect(() => {
+    console.log('Fetching group name for room:', roomName);
+    const fetchGroupName = async () => {
+      const response = await getGroupNameByID(roomName);
+      if (response) {
+        setGroupName(response.group_name);
+      }
+    };
+
+    fetchGroupName();
+  }, [roomName]);
 
   const leaveRoom = () => {
     const __createdtime__ = Date.now();
@@ -23,7 +38,7 @@ const ChatHeader = ({ username, roomName }) => {
       {firstChar}
       </Avatar>
         <Typography variant="h6" sx={{ flexGrow: 1, color: 'white', marginLeft: 2 }}>
-          {roomName}
+        {groupName}
         </Typography>
         <Button 
           sx={{ color: 'white', borderColor: 'white', '&:hover': { backgroundColor: '#2A4365' } }} 

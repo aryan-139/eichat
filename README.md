@@ -22,6 +22,8 @@ Convo.ei is a real-time chat application that enables users to join chat rooms, 
 - Text decompression from DB (not yet)
 - User authentication (not yet)
 - Create New User 
+- User Validations 
+- Room Validations
 
 ## Technologies
 - Node.js

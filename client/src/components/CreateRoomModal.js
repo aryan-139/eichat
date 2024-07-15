@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from '@mui/material';
 import { validateRoom } from '../utils/landing_page_utils/groupChecks';
+import axiosApi from '../utils/AxiosConfig';
 
 const CreateRoomModal = ({ isModalOpen, handleCloseModal, handleCreateRoomSubmit }) => {
   const [newRoomID, setNewRoomID] = useState('');
@@ -16,8 +17,16 @@ const CreateRoomModal = ({ isModalOpen, handleCloseModal, handleCreateRoomSubmit
     const newRoomData={
         group_id: newRoomID,
         group_name: roomName,
-        description: roomDescription,
+        group_description: roomDescription,
         };
+    axiosApi.post('/group/add_group', newRoomData)
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.error('Error creating new room:', error);
+    });
+    
     console.log(newRoomData);
     }
     setNewRoomID('');

@@ -116,7 +116,6 @@ io.on('connection', (socket) => {
   // Send message to room
   socket.on('send_message', (data) => {
     const { message, username, room, __createdtime__ } = data;
-    console.log(data);
     const newMessage={
       from_user: data.user,
       to_user: room,

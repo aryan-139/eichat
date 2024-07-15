@@ -32,6 +32,7 @@ const ChatUI = ({ username, room }) => {
       fetchUserName(message.user);
     });
   }, [messageArray, userNames]);
+//as soon as there is any change in the message array then the useEffect is triggered and the new user_id is parsed and a map is created 
 
   useEffect(() => {
     const handleReceiveMessage = (data) => {

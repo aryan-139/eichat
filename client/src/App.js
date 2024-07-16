@@ -10,6 +10,8 @@ import CreateUserModal from './components/CreateUserModal';
 import { checkIfUserExists } from './api/userApi';
 import { checkIfGroupExists } from './api/groupApi';
 import chat from './assets/chat.jpg';
+import tweet from './assets/convo_tweet.png';
+import ChatIcon from '@mui/icons-material/Chat';
 
 const App = () => {
   const socket = React.useContext(SocketContext);
@@ -18,6 +20,10 @@ const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const navigate = useNavigate();
+
+  const handleTweetSubmit = () => {
+    window.open('https://ctt.ac/FO6CI');
+  };
 
   //login and group verification
   const handleJoin = async () => {
@@ -78,8 +84,21 @@ const App = () => {
           <img src={chat} alt="Description of the image" style={{ width: '100%', height: '100%', borderRadius: '8px' }} />
         </Box>
         <Box sx={{ display: 'flex', marginLeft:'20px',flexDirection: 'column', width: '70rem', p: 4, boxShadow: 1, bgcolor: 'white', borderRadius: 3.5 }}>
-
-          <FormControl fullWidth margin="normal" sx={{ mb: 2, mt:"18rem" }}>
+        
+        {/* Chat Icon */}
+        <Box sx={{ padding: '1rem', display: 'flex', alignItems: 'center' }}>
+          <Box>
+            <Typography variant="h2" sx={{ color: '#2f53eb' }}>
+              Convo.ei
+            </Typography>
+            <Typography variant="body1" sx={{ color: '#2f53eb' }}>
+              Select a chat to start messaging. 
+            </Typography>
+          </Box>
+          <ChatIcon sx={{ fontSize: 120, color: '#2f53eb', marginLeft: 'auto' }} />
+        {/*registration*/}
+        </Box>
+          <FormControl fullWidth margin="normal" sx={{ mb: 2, mt:"1rem" }}>
             <TextField label="Enter User ID (sample format: uid12345)" variant="outlined" value={userName} onChange={(e) => setUsername(e.target.value)} color="primary" />
           </FormControl>
 
@@ -92,6 +111,10 @@ const App = () => {
           <Button variant="contained" color="primary" onClick={handleJoin} fullWidth>Join</Button>
           <CreateRoomModal isModalOpen={isModalOpen} handleCloseModal={handleCloseModal} handleCreateRoomSubmit={handleCreateRoomSubmit} />
           <CreateUserModal isModalOpen={isUserModalOpen} handleCloseModal={()=>setIsUserModalOpen(false)} handleUserCreatedSubmit={handleUserCreatedSubmit} />
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+            <img src={tweet} alt="Description of the image" style={{ width: '100%', height: '100%', borderRadius: '8px' }} />
+          </Box>
+          <Button variant="outlined" color="primary" onClick={handleTweetSubmit} fullWidth sx={{ mt: 2 }}>Tweet about Convo</Button>
         </Box>
       </Box>
     </ThemeProvider>

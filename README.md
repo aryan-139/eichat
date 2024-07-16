@@ -61,11 +61,11 @@ npm run start
 
 
 ## Screenshots
-![Alt text](image-2.png)
-- Home Page (Styling in progress)
+![Alt text](image-5.png)
+- Home Page
 
-![Alt text](image-3.png)
-- Main Chat Page (Styling in progress)
+![Alt text](image-6.png)
+- Main Chat Page 
 
 ## Testing Credentials
 

@@ -24,4 +24,16 @@ const getGroupNameByID=async (group_id)=>{
     }
 }
 
-export { checkIfGroupExists, getGroupNameByID };
+const deleteGroupByGroupID=async(group_id)=>{
+    try{
+        const res=await axiosApi.post('/group/delete_group',{group_id});
+        if(res.status===200){
+            return true;
+        }
+    } catch (error) {
+        console.error('Error deleting group:', error);
+        return false;
+    }
+}
+
+export { checkIfGroupExists, getGroupNameByID, deleteGroupByGroupID };

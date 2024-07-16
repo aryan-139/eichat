@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AppBar, Avatar, Button, Icon, Toolbar, Typography } from '@mui/material';
 import { SocketContext } from '../context/SocketContext';
 import { useNavigate } from 'react-router-dom';
-import { getGroupNameByID } from '../api/groupApi';
+import { deleteGroupByGroupID, getGroupNameByID } from '../api/groupApi';
 
 const ChatHeader = ({ username, roomName }) => {
   const [groupName, setGroupName] = useState('');
@@ -31,6 +31,14 @@ const ChatHeader = ({ username, roomName }) => {
     navigate('/', { replace: true });
   };
 
+  const deleteGroup = async () => {
+    const response = await deleteGroupByGroupID(roomName);
+    if (response) {
+      alert('Group deleted successfully');
+      navigate('/', { replace: true });
+    }
+  }
+
   return (
     <AppBar position="static" sx={{ backgroundColor: '#172B4D' }}>
       <Toolbar>
@@ -40,6 +48,15 @@ const ChatHeader = ({ username, roomName }) => {
         <Typography variant="h6" sx={{ flexGrow: 1, color: 'white', marginLeft: 2 }}>
         {groupName}
         </Typography>
+      
+      <Button 
+        sx={{ color: 'white', marginRight:2 , borderColor: 'white', '&:hover': { backgroundColor: '#2A4365' } }} 
+        onClick={deleteGroup} 
+        variant="outlined"
+      >
+        Delete Group
+      </Button>
+        
         <Button 
           sx={{ color: 'white', borderColor: 'white', '&:hover': { backgroundColor: '#2A4365' } }} 
           onClick={leaveRoom} 

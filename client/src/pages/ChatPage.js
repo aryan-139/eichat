@@ -16,7 +16,7 @@ const ChatPage = () => {
   const socket=React.useContext(SocketContext);
   const [roomUsers, setRoomUsers] = useState([]);
 
-//total chatroom users
+//total chatroom users right now
 useEffect(() => {
   socket.on('chatroom_users', (data) => {
     setRoomUsers(data);
@@ -29,9 +29,12 @@ useEffect(() => {
 
   return (
     <div>
-      {/* <ChatSidebar roomUsers={roomUsers}/> */}
+      
       <ChatDrawer username={userName} roomUsers={roomUsers}/>
-      {/* <ChatBox roomName={"Test Room"}/> */}
+      
+
+
+      {/**TRY ADDING A STATE VARIABLE AND TEST IF ON CHANGING THE STATE VARIABLE THE ROOM CHANGE HAPPENS */}
       <Paper sx={{ width: '90%', maxWidth: 1280, margin: 'auto', marginTop: 0, borderRadius: 2, marginLeft: 52, marginRight:300 }}>
       <ChatHeader username={userName} roomName={room} />
       <ChatUI username={userName} room={room}/>

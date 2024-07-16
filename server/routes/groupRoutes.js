@@ -1,5 +1,6 @@
 const express = require('express');
 const Group = require('../models/groups');
+const Message = require('../models/messages');
 const router = express.Router();
 
 // Add a group
@@ -67,6 +68,17 @@ router.post('/get_group', async (req, res) => {
     }
 });
 
+//delete a group by group id
+router.post('/delete_group', async (req, res) => {
+    try {
+        await Group.findOneAndDelete({ group_id: req.body.group_id });
+        await Message.deleteMany({ to_user: req.body.group_id });
+        res.status(200).send("group_deleted");
+    }
+    catch (e) {
+        res.status(500).send();
+    }
+});
 
 
 module.exports = router;

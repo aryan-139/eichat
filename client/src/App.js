@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, Select, MenuItem, FormControl, InputLabel, ThemeProvider, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Box, TextField, Button, Select, MenuItem, FormControl, InputLabel, ThemeProvider, Dialog, DialogTitle, DialogContent, DialogActions, Typography } from '@mui/material';
 import theme from './utils/Theme';
 import { useNavigate } from 'react-router-dom';
 import { SocketContext } from './context/SocketContext';
@@ -9,6 +9,7 @@ import CreateRoomModal from './components/CreateRoomModal';
 import CreateUserModal from './components/CreateUserModal';
 import { checkIfUserExists } from './api/userApi';
 import { checkIfGroupExists } from './api/groupApi';
+import chat from './assets/chat.jpg';
 
 const App = () => {
   const socket = React.useContext(SocketContext);
@@ -70,9 +71,15 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', bgcolor: theme.palette.secondary.main }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '50vh', p: 4, boxShadow: 3, bgcolor: 'white', borderRadius: 2 }}>
-          <FormControl fullWidth margin="normal" sx={{ mb: 2 }}>
+      <Box sx={{ display: 'flex', height: '100vh', bgcolor: '#2f53eb' }}>
+        
+       {/* Image Box */}
+       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '120rem', p: 4, boxShadow: 1, bgcolor: 'white', borderRadius: 2 ,m:5 }}>
+          <img src={chat} alt="Description of the image" style={{ width: '100%', height: '100%', borderRadius: '8px' }} />
+        </Box>
+        <Box sx={{ display: 'flex', marginLeft:'20px',flexDirection: 'column', width: '70rem', p: 4, boxShadow: 1, bgcolor: 'white', borderRadius: 3.5 }}>
+
+          <FormControl fullWidth margin="normal" sx={{ mb: 2, mt:"18rem" }}>
             <TextField label="Enter User ID (sample format: uid12345)" variant="outlined" value={userName} onChange={(e) => setUsername(e.target.value)} color="primary" />
           </FormControl>
 

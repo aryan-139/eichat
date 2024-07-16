@@ -24,4 +24,16 @@ const getUserNameById = async (user_id) => {
     }
 }
 
-export { checkIfUserExists, getUserNameById };
+const deleteUserByUserId = async (user_id) => {
+    try {
+        const res = await axiosApi.post('/user/delete_user', { user_id });
+        if (res.status === 200) {
+            return true;
+        }
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        return false;
+    }
+}
+
+export { checkIfUserExists, getUserNameById, deleteUserByUserId };

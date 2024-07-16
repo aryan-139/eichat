@@ -30,7 +30,7 @@ const CreateUserModal = ({ isModalOpen, handleCloseModal, handleUserCreatedSubmi
         setLastName('');
         setPhoneNumber('');
         setUserID('');
-        handleUserCreatedSubmit();                
+        handleUserCreatedSubmit();              
   }}
   return (
     <Dialog open={isModalOpen} onClose={handleCloseModal}>

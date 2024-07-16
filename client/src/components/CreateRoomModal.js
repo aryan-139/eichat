@@ -24,7 +24,7 @@ const CreateRoomModal = ({ isModalOpen, handleCloseModal, handleCreateRoomSubmit
         alert('Room Created');
     })
     .catch((error) => {
-        console.error('Error creating new room:', error);
+        alert('Room already exists, try another Room ID');
     });
     
     console.log(newRoomData);

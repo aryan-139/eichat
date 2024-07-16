@@ -69,4 +69,14 @@ router.post('/delete_user', async (req, res) => {
     }
 });
 
+//delete all users
+router.post('/delete_all_users', async (req, res) => {
+    try {
+        await User.deleteMany();
+        res.status(200).send('All users deleted');
+    } catch (e) {
+        res.status(500).send();
+    }
+});
+
 module.exports = router;

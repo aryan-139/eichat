@@ -80,5 +80,17 @@ router.post('/delete_group', async (req, res) => {
     }
 });
 
+//delete all groups 
+router.post('/delete_all_groups', async (req, res) => {
+    try {
+        await Group.deleteMany({});
+        await Message.deleteMany({});
+        res.status(200).send("all_groups_deleted");
+    }
+    catch (e) {
+        res.status(500).send();
+    }
+});
+
 
 module.exports = router;

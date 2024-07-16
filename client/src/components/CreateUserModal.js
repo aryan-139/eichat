@@ -34,7 +34,7 @@ const CreateUserModal = ({ isModalOpen, handleCloseModal, handleUserCreatedSubmi
   }}
   return (
     <Dialog open={isModalOpen} onClose={handleCloseModal}>
-      <DialogTitle>Create a New Room</DialogTitle>
+      <DialogTitle>Register as a New User</DialogTitle>
       <DialogContent>
         <TextField autoFocus margin="dense" label="UserID (sample: uid12345)" type="text" fullWidth variant="outlined" value={userID} onChange={(e) => setUserID(e.target.value)} />
         <TextField margin="dense" label="First Name" type="text" fullWidth variant="outlined" value={firstName} onChange={(e) => setFirstName(e.target.value)} />

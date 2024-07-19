@@ -186,5 +186,5 @@ server.listen(PORT, () => {
 
 // Routes
 app.use('/user', userRoute);
-app.use('/group', require('./routes/groupRoutes'));
-app.use('/message', require('./routes/messageRoutes'));
+app.use('/group', groupRoute);
+app.use('/message', messageRoute);
